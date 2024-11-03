@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Cat Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #add8e6;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 100px;
+            margin: 0;
+        }
+        .cat {
+            width: 300px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .pop-count {
+            font-size: 80px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>POPNING</h1>
+        <div class="pop-count" id="popCount">0</div>
+        <img src="close.jpg" alt="Cat" class="cat" id="cat">
+    </div>
+
+    <audio id="popSound" src="popsound.mp3"></audio>
+
+    <script>
+        let popCount = 0;
+        const cat = document.getElementById("cat");
+        const popCountDisplay = document.getElementById("popCount");
+        let isHolding = false;
+
+        const openMouthCatImage = "open.jpg";
+        const closedMouthCatImage = "close.jpg";
+
+        cat.addEventListener("mousedown", () => {
+            if (!isHolding) {
+                isHolding = true;
+                cat.src = openMouthCatImage;
+                popSound.currentTime = 0;
+                popSound.play();
+                cat.style.transform = "scale(1.1)";
+            }
+        });
+
+        cat.addEventListener("mouseup", () => {
+            if (isHolding) {
+                isHolding = false;
+                cat.src = closedMouthCatImage;
+                cat.style.transform = "scale(1)";
+            }
+        });
+
+        cat.addEventListener("mouseleave", () => {
+            if (isHolding) {
+                isHolding = false;
+                cat.src = closedMouthCatImage;
+            }
+        });
+
+
+        cat.addEventListener("click", () => {
+            if (!isHolding) {
+                popCount++;
+                popCountDisplay.textContent = `${popCount}`;
+            }
+        });
+    </script>
+
+</body>
+</html>
